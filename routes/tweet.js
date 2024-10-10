@@ -46,4 +46,12 @@ router.get('/:token', (req, res) => {
         })
 })
 
+router.delete('/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    Tweet.deleteOne({ _id: id }).then(
+        res.json({ result: true })
+    )
+})
+
 module.exports = router;
