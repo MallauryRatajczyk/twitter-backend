@@ -48,5 +48,15 @@ router.post('/signin', (req, res) => {
   }
 });
 
+router.get('/id/:token', (req, res) => {
+  User.findOne({ token: req.params.token }).then(data => {
+    if (data) {
+      res.json({ result: true, user: data })
+    } else {
+      res.json({ result: false, message: "user not found" })
+    }
+  })
+})
+
 
 module.exports = router;

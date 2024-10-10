@@ -3,6 +3,7 @@ var router = express.Router();
 const User = require('../models/users');
 const Tweet = require('../models/tweet')
 const HashtagList = require('../models/hashtag')
+const ObjectId = require('mongodb').ObjectId;
 require('../models/connection');
 const { findHashtag } = require('../modules/Hashtag');
 
@@ -30,6 +31,19 @@ router.post('/post', (req, res) => {
             res.json({ resultat: false, message: "proprietaire introuvable" })
         }
     })
+})
+
+router.get('/:token', (req, res) => {
+    let token = req.params.token;
+    fetch(`http://localhost:3000/users/id/${token}`)
+        .then(response => response.json())
+        .then(data => {
+            const id = data.user._id
+            console.log(id)
+            Tweet.find({ proprietaire: id }).populate("proprietaire").then(data => {
+                res.json({ result: true, tweets: data })
+            })
+        })
 })
 
 module.exports = router;

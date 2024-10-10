@@ -6,8 +6,6 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true, match: /\S+@\S+\.\S+/ },
     age: { type: Number, min: 18, max: 100 },
     password: String,
-    tweet: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tweet' }],
-    tweetLiked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tweet' }],
     token: String
 });
 
