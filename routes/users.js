@@ -26,7 +26,7 @@ router.post('/signup', (req, res) => {
         nom, prenom, email, age, password: hash, token
       })
       newUser.save();
-      res.json({ result: true })
+      res.json({ result: true, user: newUser })
     } else {
       res.json({ result: false, message: "user déjà inscrit" })
     }
