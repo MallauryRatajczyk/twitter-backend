@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/users');
 const Tweet = require('../models/tweet')
-const HashtagList = require('../models/hashtag')
+const Hashtag = require('../models/hashtag')
 const ObjectId = require('mongodb').ObjectId;
 require('../models/connection');
 const { findHashtag } = require('../modules/Hashtag');
@@ -20,10 +20,14 @@ router.post('/post', (req, res) => {
             })
             newTweet.save()
             for (let elem of hashtag) {
-                let newHashtag = new HashtagList({
-                    hashtag: elem
+                Hashtag.findOne({ hashtag: elem }).then(data => {
+                    if (!data) {
+                        let newHashtag = new HashtagList({
+                            hashtag: elem
+                        })
+                        newHashtag.save()
+                    }
                 })
-                newHashtag.save()
             }
             res.json({ resultat: true, newTweet })
 
