@@ -8,6 +8,7 @@ require('../models/connection');
 const { findHashtag } = require('../modules/Hashtag');
 
 /* GET users listing. */
+//Post un tweet et enregistre les hashtags
 router.post('/post', (req, res) => {
     let date = req.body.date;
     let token = req.body.token;
@@ -37,6 +38,8 @@ router.post('/post', (req, res) => {
     })
 })
 
+
+//Récupère les tweet d'un user à partir de son token
 router.get('/:token', (req, res) => {
     let token = req.params.token;
     fetch(`http://localhost:3000/users/id/${token}`)
@@ -50,6 +53,8 @@ router.get('/:token', (req, res) => {
         })
 })
 
+
+//Supprime un tweet
 router.delete('/:id', (req, res) => {
     let id = req.params.id;
     console.log(id);
